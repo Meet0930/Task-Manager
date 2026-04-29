@@ -116,13 +116,16 @@ class ForgotPasswordView(views.APIView):
         email = serializer.validated_data["email"]
         
         otp_code = OTPVerification.generate_otp(email)
-        send_mail(
+        sent = send_mail(
             "Password Reset Request",
             f"Your password reset code is: {otp_code}\nThis code will expire in 10 minutes.",
             None,
             [email],
-            fail_silently=False,
+            fail_silently=True,
         )
+        if sent == 0:
+            return Response({"error": "Could not send the reset OTP. Please check email configuration."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
         return Response({"message": "Password reset OTP sent to email."})
 
 class ResetPasswordView(views.APIView):
