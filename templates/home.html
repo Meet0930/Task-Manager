@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Task Manager | Simple task tracking{% endblock %}
+{% block page_name %}home{% endblock %}
+{% block content %}
+<main class="landing">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Modern task tracking</p>
+      <h1>Everything you need to plan, assign, and finish work in one simple place.</h1>
+      <p class="hero-text">
+        Built for non-technical users, team leads, and admins. Clear cards, easy filters, quick actions,
+        and a clean layout make task management feel straightforward.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="{% url 'register-page' %}">Create account</a>
+        <a class="btn btn-secondary" href="{% url 'login-page' %}">Login</a>
+        <a class="btn btn-ghost" href="/api/docs/">API docs</a>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="stat-grid">
+        <div class="glass-card"><span>Tasks</span><strong>Clean overview</strong><p>See what is pending and complete.</p></div>
+        <div class="glass-card"><span>Priority</span><strong>Color-coded</strong><p>Low, medium, and high are easy to spot.</p></div>
+        <div class="glass-card"><span>Access</span><strong>Login first</strong><p>Users sign in before using the dashboard.</p></div>
+        <div class="glass-card"><span>Admin</span><strong>Assign work</strong><p>Managers can create and update tasks.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature-grid">
+    <article class="feature-card">
+      <h3>Simple for everyone</h3>
+      <p>Large buttons, readable text, and minimal clutter help non-IT users navigate quickly.</p>
+    </article>
+    <article class="feature-card">
+      <h3>Fast actions</h3>
+      <p>Search, filter, sort, edit, and delete tasks without jumping between screens.</p>
+    </article>
+    <article class="feature-card">
+      <h3>API connected</h3>
+      <p>The UI talks directly to the Django REST API using fetch calls and JWT tokens.</p>
+    </article>
+  </section>
+</main>
+{% endblock %}

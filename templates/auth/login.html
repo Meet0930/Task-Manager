@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Login | Task Manager{% endblock %}
+{% block page_name %}login{% endblock %}
+{% block content %}
+<main class="auth-layout">
+  <section class="auth-copy">
+    <p class="eyebrow">Welcome back</p>
+    <h1>Login to your workspace</h1>
+    <p>Use your credentials to open the dashboard, track tasks, and manage work in a few clicks.</p>
+    <ul class="benefits">
+      <li>Fast sign in with clear validation</li>
+      <li>Secure JWT authentication</li>
+      <li>Mobile-friendly and easy to use</li>
+    </ul>
+  </section>
+
+  <form class="auth-card" id="login-form" novalidate>
+    <div class="auth-head">
+      <h2>Login</h2>
+      <p>Enter your account details below.</p>
+    </div>
+    <div class="form-errors" id="login-errors" hidden></div>
+    <label>
+      Username
+      <input class="form-input" name="username" autocomplete="username" required placeholder="Enter username">
+    </label>
+    <label>
+      Password
+      <input class="form-input" name="password" type="password" autocomplete="current-password" required placeholder="Enter password">
+    </label>
+    <button class="btn btn-primary btn-block" type="submit" data-submit-label="Login">Login</button>
+    <p class="form-footer">
+      No account yet? <a href="{% url 'register-page' %}">Create one</a>
+      <br>
+      Forgot your password? <a href="{% url 'forgot-password-page' %}">Reset it</a>
+    </p>
+  </form>
+</main>
+{% endblock %}

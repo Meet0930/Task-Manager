@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Verify OTP | Task Manager{% endblock %}
+{% block page_name %}verify-otp{% endblock %}
+{% block content %}
+<main class="auth-layout">
+  <section class="auth-copy">
+    <p class="eyebrow">Verify your email</p>
+    <h1>Enter the OTP we sent to your inbox</h1>
+    <p>After signup, we email a one-time code. Paste it here to activate your account and continue to the dashboard.</p>
+    <ul class="benefits">
+      <li>One-time verification code</li>
+      <li>Account activates after confirmation</li>
+      <li>Works with the signup form</li>
+    </ul>
+  </section>
+
+  <form class="auth-card" id="verify-otp-form" novalidate>
+    <div class="auth-head">
+      <h2>Verify account</h2>
+      <p>Use the email from your registration.</p>
+    </div>
+    <div class="form-errors" id="verify-otp-errors" hidden></div>
+    <label>
+      Email
+      <input class="form-input" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+    </label>
+    <label>
+      OTP code
+      <input class="form-input" name="otp_code" inputmode="numeric" maxlength="6" required placeholder="6-digit code">
+    </label>
+    <button class="btn btn-primary btn-block" type="submit" data-submit-label="Verify account">Verify account</button>
+    <p class="form-footer">Need a new account? <a href="{% url 'register-page' %}">Register</a></p>
+  </form>
+</main>
+{% endblock %}

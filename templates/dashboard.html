@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | Task Manager{% endblock %}
+{% block page_name %}dashboard{% endblock %}
+{% block content %}
+<main class="workspace">
+  <aside class="sidebar">
+    <div class="sidebar-card profile-card">
+      <div class="avatar">{{ user.username|first|upper }}</div>
+      <div>
+        <p class="eyebrow">Signed in</p>
+        <h1 id="user-name">Loading...</h1>
+        <p id="user-role">Fetching your account details</p>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="section-title">
+        <h2>Filters</h2>
+        <button class="link-btn" type="button" id="reset-filters">Reset</button>
+      </div>
+      <div class="filter-stack">
+        <label>
+          Search
+          <input class="form-input" id="search-input" placeholder="Search by title">
+        </label>
+        <label>
+          Status
+          <select class="form-input" id="status-filter">
+            <option value="">All status</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+          </select>
+        </label>
+        <label>
+          Priority
+          <select class="form-input" id="priority-filter">
+            <option value="">All priority</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </label>
+        <label>
+          Sort
+          <select class="form-input" id="ordering-filter">
+            <option value="-created_at">Newest first</option>
+            <option value="created_at">Oldest first</option>
+            <option value="due_date">Due date ascending</option>
+            <option value="-due_date">Due date descending</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <div class="sidebar-card stats-card">
+      <h2>Summary</h2>
+      <div class="mini-stat-grid">
+        <div><span>Total</span><strong id="stat-total">0</strong></div>
+        <div><span>Completed</span><strong id="stat-completed">0</strong></div>
+        <div><span>Pending</span><strong id="stat-pending">0</strong></div>
+      </div>
+    </div>
+  </aside>
+
+  <section class="content-area">
+    <div class="content-head">
+      <div>
+        <p class="eyebrow">Dashboard</p>
+        <h1>Manage your tasks with clarity</h1>
+        <p>Search, filter, sort, add, edit, and complete tasks from one clean screen.</p>
+      </div>
+      <div class="content-actions">
+        <button class="btn btn-primary" type="button" id="add-task-btn">Add Task</button>
+        <button class="btn btn-ghost" type="button" id="refresh-btn">Refresh</button>
+      </div>
+    </div>
+
+    <div class="toolbar mobile-only">
+      <button class="chip active" data-mobile-filter="all" type="button">All</button>
+      <button class="chip" data-mobile-filter="pending" type="button">Pending</button>
+      <button class="chip" data-mobile-filter="completed" type="button">Completed</button>
+    </div>
+
+
+    <div id="empty-state" class="empty-state-card" hidden>
+      <h2>No tasks yet</h2>
+      <p>Add your first task to start tracking work.</p>
+      <button class="btn btn-primary" type="button" id="empty-add-btn">Add your first task</button>
+    </div>
+
+    <div id="task-grid" class="task-grid"></div>
+  </section>
+</main>
+
+<div class="modal" id="task-modal" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-panel">
+    <div class="modal-head">
+      <div>
+        <p class="eyebrow" id="modal-eyebrow">New task</p>
+        <h2 id="modal-title">Add task</h2>
+      </div>
+      <button class="icon-btn" type="button" data-close-modal aria-label="Close modal">✕</button>
+    </div>
+    <form id="task-form" class="modal-form">
+      <input type="hidden" name="id" id="task-id">
+      <label>
+        Title
+        <input class="form-input" name="title" id="task-title" required placeholder="Task title">
+      </label>
+      <label>
+        Description
+        <textarea class="form-input" name="description" id="task-description" rows="4" placeholder="Add notes or details"></textarea>
+      </label>
+      <div class="form-row">
+        <label>
+          Priority
+          <select class="form-input" name="priority" id="task-priority" required>
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </label>
+        <label>
+          Due date
+          <input class="form-input" name="due_date" id="task-due-date" type="datetime-local" required>
+        </label>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" type="button" data-close-modal>Cancel</button>
+        <button class="btn btn-primary" type="submit" id="save-task-btn">Save task</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

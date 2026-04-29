@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Register | Task Manager{% endblock %}
+{% block page_name %}register{% endblock %}
+{% block content %}
+<main class="auth-layout">
+  <section class="auth-copy">
+    <p class="eyebrow">Get started</p>
+    <h1>Create an account in less than a minute</h1>
+    <p>Sign up once and the task manager will remember your workspace, progress, and assignments.</p>
+    <ul class="benefits">
+      <li>Friendly signup form with validation</li>
+      <li>Instant access after registration</li>
+      <li>Great for beginners and non-technical users</li>
+    </ul>
+  </section>
+
+  <form class="auth-card" id="register-form" novalidate>
+    <div class="auth-head">
+      <h2>Register</h2>
+      <p>Create your new account.</p>
+    </div>
+    <div class="form-errors" id="register-errors" hidden></div>
+    <label>
+      Username
+      <input class="form-input" name="username" autocomplete="username" required placeholder="Enter username">
+    </label>
+    <label>
+      Email
+      <input class="form-input" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+    </label>
+    <label>
+      Password
+      <input class="form-input" name="password" type="password" autocomplete="new-password" required placeholder="At least 8 characters">
+    </label>
+    <label>
+      Confirm password
+      <input class="form-input" name="password_confirm" type="password" autocomplete="new-password" required placeholder="Repeat password">
+    </label>
+    <button class="btn btn-primary btn-block" type="submit" data-submit-label="Create account">Create account</button>
+    <p class="form-footer">Already have an account? <a href="{% url 'login-page' %}">Login</a></p>
+  </form>
+</main>
+{% endblock %}

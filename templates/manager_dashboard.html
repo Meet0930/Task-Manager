@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block title %}Manager Panel | Task Manager{% endblock %}
+{% block page_name %}manager{% endblock %}
+{% block content %}
+<main class="workspace admin-workspace">
+  <aside class="sidebar">
+    <div class="sidebar-card profile-card">
+      <div class="avatar admin">A</div>
+      <div>
+        <p class="eyebrow">Admin mode</p>
+        <h1>Manager Panel</h1>
+        <p>Assign tasks to users and change status from one place.</p>
+      </div>
+    </div>
+    <div class="sidebar-card">
+      <div class="section-title">
+        <h2>Filters</h2>
+        <button class="link-btn" type="button" id="admin-reset-filters">Reset</button>
+      </div>
+      <div class="filter-stack">
+        <label>
+          User
+          <select class="form-input" id="admin-user-filter">
+            <option value="">All users</option>
+          </select>
+        </label>
+        <label>
+          Status
+          <select class="form-input" id="admin-status-filter">
+            <option value="">All status</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+          </select>
+        </label>
+        <label>
+          Sort
+          <select class="form-input" id="admin-ordering-filter">
+            <option value="-created_at">Newest first</option>
+            <option value="created_at">Oldest first</option>
+            <option value="due_date">Due date ascending</option>
+            <option value="-due_date">Due date descending</option>
+            <option value="user__username">User Name (A-Z)</option>
+            <option value="-user__username">User Name (Z-A)</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div class="sidebar-card stats-card">
+      <h2>Overview</h2>
+      <div class="mini-stat-grid">
+        <div><span>Assigned Users</span><strong>{{ user_count }}</strong></div>
+        <div><span>Tasks</span><strong id="admin-task-count">0</strong></div>
+      </div>
+    </div>
+  </aside>
+
+  <section class="content-area">
+    <div class="content-head">
+      <div>
+        <p class="eyebrow">Manager tools</p>
+        <h1>Assign tasks with the same easy interface</h1>
+        <p>Staff can add a task, choose the user, and keep the workflow moving.</p>
+      </div>
+      <div class="content-actions">
+        <button class="btn btn-primary" type="button" id="add-admin-task-btn">Assign Task</button>
+        <button class="btn btn-ghost" type="button" id="refresh-admin-btn">Refresh</button>
+      </div>
+    </div>
+
+    <div id="admin-task-grid" class="task-grid"></div>
+  </section>
+</main>
+
+<div class="modal" id="admin-modal" hidden>
+  <div class="modal-backdrop" data-close-admin-modal></div>
+  <div class="modal-panel">
+    <div class="modal-head">
+      <div>
+        <p class="eyebrow">Admin action</p>
+        <h2>Assign a task</h2>
+      </div>
+      <button class="icon-btn" type="button" data-close-admin-modal aria-label="Close modal">✕</button>
+    </div>
+    <form id="admin-task-form" class="modal-form">
+      <input type="hidden" name="id" id="admin-task-id">
+      <label>
+        User
+        <select class="form-input" name="user_id" id="admin-user" required></select>
+      </label>
+      <label>
+        Title
+        <input class="form-input" name="title" id="admin-title" required placeholder="Task title">
+      </label>
+      <label>
+        Description
+        <textarea class="form-input" name="description" id="admin-description" rows="4"></textarea>
+      </label>
+      <div class="form-row">
+        <label>
+          Status
+          <select class="form-input" name="status" id="admin-status" required>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+          </select>
+        </label>
+        <label>
+          Priority
+          <select class="form-input" name="priority" id="admin-priority" required>
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </label>
+      </div>
+      <label>
+        Due date
+        <input class="form-input" name="due_date" id="admin-due-date" type="datetime-local" required>
+      </label>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" type="button" data-close-admin-modal>Cancel</button>
+        <button class="btn btn-primary" type="submit">Assign task</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
