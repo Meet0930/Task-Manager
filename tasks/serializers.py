@@ -38,13 +38,21 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
         # Generate OTP and send email
         otp_code = OTPVerification.generate_otp(user.email)
-        send_mail(
-            "Verify your Task Manager account",
-            f"Your verification code is: {otp_code}\nThis code will expire in 10 minutes.",
-            None,
-            [user.email],
-            fail_silently=False,
-        )
+        try:
+            sent = send_mail(
+                "Verify your Task Manager account",
+                f"Your verification code is: {otp_code}\nThis code will expire in 10 minutes.",
+                None,
+                [user.email],
+                fail_silently=True,
+            )
+            if sent == 0:
+                user.delete()
+                raise serializers.ValidationError({"email": "Email server rejected the connection. Cannot send OTP."})
+        except Exception as e:
+            user.delete()
+            raise serializers.ValidationError({"email": f"Failed to send OTP email: {str(e)}"})
+            
         return user
 
 
